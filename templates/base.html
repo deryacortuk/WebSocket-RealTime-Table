@@ -1,0 +1,73 @@
+<html>
+    <head>
+     
+    </head>
+
+<script>
+
+let websocket = new WebSocket('ws://localhost:8000/ws/data/');
+
+websocket.onopen = function(e){
+    alert('connection established successfully');
+}
+websocket.onmessage = function(e){
+
+    console.log(e['data']);
+
+    let recData = JSON.parse(e.data);
+    
+    tableData[recData['indexName']]['currentValue'] =recData['value']
+    console.log(tableData[recData['indexName']['currentValue']]);
+
+    tablecontent =documet.getElementById('datalist');
+    tablecontent = "";
+
+    createHeader(tablecontent,tableHeader);
+    createTableBody(tablecontent,TableBodyData)
+};
+
+
+</script>
+<body>
+
+<h2> Real Time Data Table</h2>
+<table id="datalist"></table>
+</body>
+
+<script>
+let tableHeader = {{tableHeader|safe}};
+let TableBodyData ={{data|safe}}
+
+function createHeader(table,headervalues){
+
+    let thead = table.createTHead();
+    let trow = tHead.insertRow();
+
+    for (val in headervalues){
+        let th document.createElement('th');
+        let text = document.createTextNode(headervalues[val]);
+        th.appendChild(text);
+        throw.appendChild(th);
+    }
+
+
+}
+function createTableBody(table,data){
+
+    for (el in data){
+        let row =table.insertRow();
+        for (key in data[el]){
+            let cell = row.insertCell();
+            let text = document.createTextNode(data[el][key]);
+            cell.appendChild(text);
+        }
+    }
+}
+
+let tablecontent = document.getElementById('customets');
+createHeader(tablecontent,tableHeader);
+createTableBody(tablecontent,TableBodyData);
+
+</script>
+
+</html>
